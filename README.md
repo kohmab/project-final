@@ -26,5 +26,13 @@
 
 - https://habr.com/ru/articles/259055/
 
-Список выполненных задач:
-...
+## Список выполненных задач:
+1) Удалить социальные сети: vk, yandex
+
+  Удалены VkOAuth2UserDataHandler и YandexOAuth2UserDataHandler, почищены register.html, login.html, application.yaml и ProfileTestData.java.
+
+2)
+
+  
+  
+    
