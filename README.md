@@ -27,11 +27,13 @@
 - https://habr.com/ru/articles/259055/
 
 ## Список выполненных задач:
-- Удалить социальные сети: vk, yandex (task 2)
+- Удалить социальные сети: vk, yandex (задание 2)
 
   Удалены VkOAuth2UserDataHandler и YandexOAuth2UserDataHandler, почищены register.html, login.html, application.yaml и ProfileTestData.java.
 
-- Сделать рефакторинг метода com.javarush.jira.bugtracking.attachment.FileUtil#upload (task 6)
+- Сделать рефакторинг метода com.javarush.jira.bugtracking.attachment.FileUtil#upload (задание 6).
+- 
+- Написаны тесты для всех публичных методов контроллера ProfileRestController (задание 5).
 
   
 

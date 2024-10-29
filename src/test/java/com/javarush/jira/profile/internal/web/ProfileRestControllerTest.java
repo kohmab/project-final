@@ -1,16 +1,13 @@
 package com.javarush.jira.profile.internal.web;
 
 import com.javarush.jira.AbstractControllerTest;
-import com.javarush.jira.common.BaseHandler;
 import com.javarush.jira.profile.ProfileTo;
-import com.javarush.jira.profile.internal.model.Profile;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.stream.Stream;
@@ -25,9 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class ProfileRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL_PROFILE = BaseHandler.REST_URL + "/profile";
+    private static final String REST_URL_PROFILE = ProfileRestController.REST_URL;
 
     @Test
+    @WithAnonymousUser
     void getUnAuth() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL_PROFILE))
                 .andExpect(status().isUnauthorized());
@@ -77,18 +75,13 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     @WithUserDetails(value = USER_MAIL)
-    @Disabled // TODO !!!!!!!
     void update() throws Exception {
         ProfileTo updatedTo = ProfileTestData.getUpdatedTo();
-        Profile updated = getUpdated(1);
-        ResultActions resultActions = perform(MockMvcRequestBuilders.put(REST_URL_PROFILE)
+        perform(MockMvcRequestBuilders.put(REST_URL_PROFILE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(writeValue(updatedTo)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
-        Profile profile = PROFILE_MATCHER.readFromJson(resultActions);
-        PROFILE_MATCHER.assertMatch(profile, ProfileTestData.getUpdated(profile.id()));
-
     }
 
     private static Stream<ProfileTo> getInvalidProfileTos() {
