@@ -55,16 +55,6 @@ public class AppConfig {
         return env.acceptsProfiles(Profiles.of("test"));
     }
 
-    @Bean
-    @Profile("test")
-    public DataSource testDataSource() {
-        return null;
-//                DataSourceBuilder.create()
-//                .driverClassName(testDriverClassName)
-//                .url(testDataSourceUrl)
-//                .build();
-    }
-
     @Autowired
     void configureAndStoreObjectMapper(ObjectMapper objectMapper) {
         objectMapper.registerModule(new Hibernate5JakartaModule());
