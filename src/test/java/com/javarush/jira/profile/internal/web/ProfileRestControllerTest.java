@@ -2,9 +2,11 @@ package com.javarush.jira.profile.internal.web;
 
 import com.javarush.jira.AbstractControllerTest;
 import com.javarush.jira.profile.ProfileTo;
+import com.javarush.jira.profile.internal.ProfileRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -13,16 +15,20 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.stream.Stream;
 
 import static com.javarush.jira.common.util.JsonUtil.writeValue;
-import static com.javarush.jira.login.internal.web.UserTestData.GUEST_MAIL;
-import static com.javarush.jira.login.internal.web.UserTestData.USER_MAIL;
+import static com.javarush.jira.login.internal.web.UserTestData.*;
 import static com.javarush.jira.profile.internal.web.ProfileTestData.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 class ProfileRestControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL_PROFILE = ProfileRestController.REST_URL;
+
+
+    @Autowired
+    private ProfileRepository repository;
 
     @Test
     @WithAnonymousUser
@@ -82,6 +88,19 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .content(writeValue(updatedTo)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
+    }
+
+    @Test
+    @WithUserDetails(value = USER_MAIL)
+    void getUpdated() throws Exception {
+        perform(MockMvcRequestBuilders.put(REST_URL_PROFILE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(writeValue(getUpdatedTo())))
+                .andExpect(status().isNoContent());
+        PROFILE_MATCHER.assertMatch(
+                repository.getExisted(USER_ID),
+                ProfileTestData.getUpdated(USER_ID)
+        );
     }
 
     private static Stream<ProfileTo> getInvalidProfileTos() {
