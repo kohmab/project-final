@@ -32,7 +32,7 @@
   Удалены VkOAuth2UserDataHandler и YandexOAuth2UserDataHandler, почищены register.html, login.html, application.yaml и ProfileTestData.java.
 
 - Сделать рефакторинг метода com.javarush.jira.bugtracking.attachment.FileUtil#upload (задание 6).
-- 
+
 - Написаны тесты для всех публичных методов контроллера ProfileRestController (задание 5).
 
   
