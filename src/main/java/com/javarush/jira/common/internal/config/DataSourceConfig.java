@@ -18,14 +18,14 @@ public class DataSourceConfig {
     @Profile("test")
     public DataSource testDataSource() {
         return new EmbeddedDatabaseBuilder()
-                .generateUniqueName(true)
                 .setType(H2)
                 .setScriptEncoding("UTF-8")
+                .generateUniqueName(true) // TODO
                 .ignoreFailedDrops(true)
                 .build();
     }
 
-    @Bean
+    @Bean // добавлен, чтобы выполнить условие "создайте два бина". Этот бин можно выкинуть
     @Profile("prod")
     public DataSource prodDataSource(@Autowired Environment env) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
