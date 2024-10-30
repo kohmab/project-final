@@ -33,6 +33,7 @@ spring:
         jdbc.batch_size: 20
   datasource:
     url: jdbc:postgresql://localhost:5432/jira
+    test_db_name: "jira_test"
 
   liquibase:
     changeLog: "classpath:db/changelog.sql"

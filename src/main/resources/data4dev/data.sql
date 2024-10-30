@@ -49,7 +49,7 @@ insert into PROFILE (ID, LAST_FAILED_LOGIN, LAST_LOGIN, MAIL_NOTIFICATIONS)
 values (1, null, null, 49),
        (2, null, null, 14);
 
-insert into CONTACT (ID, CODE, VALUE_)
+insert into CONTACT (ID, CODE, VALUE)
 values (1, 'skype', 'userSkype'),
        (1, 'mobile', '+01234567890'),
        (1, 'website', 'user.com'),
@@ -61,10 +61,6 @@ delete
 from ATTACHMENT;
 alter
 sequence ATTACHMENT_ID_SEQ restart with 1;
--- [90036][90036] Последовательность "ATTACHMENT_ID_SEQ" не найдена
--- Sequence "ATTACHMENT_ID_SEQ" not found; SQL statement: alter sequence
--- ATTACHMENT_ID_SEQ restart with 1 [90036-220]
-
 insert into ATTACHMENT (name, file_link, object_id, object_type, user_id, date_time)
 values ('Снимок экрана 1.png', './attachments/project/1_Снимок экрана 1.png', 2, 0, 4, '2023-05-04 22:28:50.215429'),
        ('Снимок экрана 2.png', './attachments/project/2_Снимок экрана 2.png', 2, 0, 4, '2023-05-04 22:28:53.687600'),

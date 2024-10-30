@@ -1,32 +1,31 @@
 ---------  users ----------------------
-delete
-from USER_ROLE;
-delete
-from CONTACT;
-delete
-from PROFILE;
+delete from USER_ROLE;
 
-delete
-from ACTIVITY;
-alter
-sequence ACTIVITY_ID_SEQ restart with 1;
-delete
-from TASK;
-alter
-sequence TASK_ID_SEQ restart with 1;
-delete
-from SPRINT;
-alter
-sequence SPRINT_ID_SEQ restart with 1;
-delete
-from PROJECT;
-alter
-sequence PROJECT_ID_SEQ restart with 1;
+delete from CONTACT;
+
+delete from PROFILE;
+
+delete from ACTIVITY;
+alter table ACTIVITY
+    alter column ID restart with 1;
+
+delete from TASK;
+alter table TASK
+    alter column ID restart with 1;
+
+delete from SPRINT;
+alter table SPRINT
+    alter column ID restart with 1;
+
+delete from PROJECT;
+alter table PROJECT
+    alter column ID restart with 1;
+
 
 delete
 from USERS;
-alter
-sequence USERS_ID_SEQ restart with 1;
+alter table USERS
+    alter column ID restart with 1;
 
 insert into USERS (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, DISPLAY_NAME)
 values ('user@gmail.com', '{noop}password', 'userFirstName', 'userLastName', 'userDisplayName'),
@@ -90,7 +89,7 @@ values (1, 1, '2023-05-15 09:05:10', null, 'Data', null, 3, 'epic', 'in_progress
 insert into USER_BELONG (OBJECT_ID, OBJECT_TYPE, USER_ID, USER_TYPE_CODE, STARTPOINT, ENDPOINT)
 values (1, 2, 2, 'task_developer', '2023-06-14 08:35:10', '2023-06-14 08:55:00'),
        (1, 2, 2, 'task_reviewer', '2023-06-14 09:35:10', null),
-       (1, 2, 1, 'task_developer', '2023-06-12 11:40:00', '2023-06-12 12:35:00'),
+--        (1, 2, 1, 'task_developer', '2023-06-12 11:40:00', '2023-06-12 12:35:00');
        (1, 2, 1, 'task_developer', '2023-06-13 12:35:00', null),
        (1, 2, 1, 'task_tester', '2023-06-14 15:20:00', null),
        (2, 2, 2, 'task_developer', '2023-06-08 07:10:00', null),
