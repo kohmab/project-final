@@ -13,16 +13,19 @@ import com.javarush.jira.login.AuthUser;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static com.javarush.jira.common.BaseHandler.createdResponse;
 
@@ -98,6 +101,13 @@ public class TaskController {
     public void changeTaskStatus(@PathVariable long id, @NotBlank @RequestParam String statusCode) {
         log.info("change task(id={}) status to {}", id, statusCode);
         taskService.changeStatus(id, statusCode);
+    }
+
+    @PatchMapping("/{id}/add-tags")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void addTags(@PathVariable long id, @RequestParam @NotNull Set<@NotBlank String> tags) {
+        log.info("add tags \"{}\" to task(id={})",tags, id);
+        taskService.addTags(id, tags);
     }
 
     @PatchMapping("/{id}/change-sprint")

@@ -88,6 +88,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .content(writeValue(updatedTo)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
+        //todo compare with repository data
     }
 
     @Test
