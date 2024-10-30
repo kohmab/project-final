@@ -110,6 +110,13 @@ public class TaskController {
         taskService.addTags(id, tags);
     }
 
+    //TODO REMOVE THIS GARBAGE
+    @GetMapping("/test")
+    @ResponseStatus(HttpStatus.OK)
+    public void test(){
+        taskService.test();
+    }
+
     @PatchMapping("/{id}/change-sprint")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changeTaskSprint(@PathVariable long id, @Nullable @RequestParam Long sprintId) {
