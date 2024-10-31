@@ -12,27 +12,21 @@ services:
     depends_on:
       - db
       - nginx
-    environment:
-      - SPRING_DATASOURCE_USERNAME=jira
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_PASSWORD=JiraRush
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/jira
     networks:
-      - app-network
+      - jira-network
 
   db:
     image: postgres:latest
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./dbdata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=jira
-      - POSTGRES_PASSWORD=JiraRush
+      - POSTGRES_USER=${DATASOURCE_USERNAME}
+      - POSTGRES_PASSWORD=${DATASOURCE_PASSWORD}
       - POSTGRES_DB=jira
     ports:
       - "5432:5432"
     networks:
-      - app-network
+      - jira-network
 
   nginx:
     container_name: nginx
@@ -43,8 +37,8 @@ services:
     volumes:
       - ./config/nginx.conf:/etc/nginx/conf.d/nginx.conf
     networks:
-      - app-network
+      - jira-network
 
 networks:
-  app-network:
+  jira-network:
     driver: bridge

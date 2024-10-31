@@ -22,6 +22,7 @@ import org.springframework.util.Assert;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
 import java.util.Set;
 
@@ -103,7 +104,7 @@ public class TaskService {
         ActivityRepository activityRepository = activityHandler.getRepository();
         List<Activity> activities = activityRepository.findAllByTaskIdOrderByUpdatedDesc(1L);
         activities.stream().map(Activity::getStatusCode).forEach(System.out::println);
-        Duration duration;
+        Period period;
     }
 
 

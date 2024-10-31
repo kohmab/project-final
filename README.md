@@ -29,13 +29,13 @@
 ## Список выполненных задач:
 - Удалить социальные сети: vk, yandex (задание 2)
 
-[//]: # (  Удалены VkOAuth2UserDataHandler и YandexOAuth2UserDataHandler, почищены register.html, login.html, application.yaml и ProfileTestData.java.)
+  Удалены VkOAuth2UserDataHandler и YandexOAuth2UserDataHandler, почищены register.html, login.html, application.yaml и ProfileTestData.java.
 
 - Добалена возможность использования для тестов in memory БД H2 (задание 4).
   
   Согласно условию добавлены два бина, см. ```src/main/java/com/javarush/jira/common/internal/config/DataSourceConfig.java```.
   Исправлен ```src/test/resources/data.sql```, чтобы H2 его мог воспринимать.
-
+- 
 [//]: # (TODO РАЗОБРАТЬСЯ УСЛОВНЫМ ОГРАНИЦЕНИЕМ В АШ2 )
 
 - Написаны тесты для всех публичных методов контроллера ProfileRestController (задание 5).
@@ -43,6 +43,10 @@
 - Сделать рефакторинг метода com.javarush.jira.bugtracking.attachment.FileUtil#upload (задание 6).
 
 - Добавлен новый функционал: добавление тегов к задаче (REST API + реализация на сервисе) (задание 7).
+
+- Добавлена Dockerfile для основного сервера
+  
+  Для проверки см. ``````
 
 [//]: # (TODO РАЗОБРАТЬСЯ С ВАЛИДАЦИЕЙ, написать тесты)
 
