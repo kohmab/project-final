@@ -32,6 +32,9 @@
 [//]: # (  Удалены VkOAuth2UserDataHandler и YandexOAuth2UserDataHandler, почищены register.html, login.html, application.yaml и ProfileTestData.java.)
 
 - Добалена возможность использования для тестов in memory БД H2 (задание 4).
+  
+  Согласно условию добавлены два бина, см. ```src/main/java/com/javarush/jira/common/internal/config/DataSourceConfig.java```.
+  Исправлен ```src/test/resources/data.sql```, чтобы H2 его мог воспринимать.
 
 [//]: # (TODO РАЗОБРАТЬСЯ УСЛОВНЫМ ОГРАНИЦЕНИЕМ В АШ2 )
 
