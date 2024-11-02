@@ -98,14 +98,6 @@ public class TaskService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public void test(){
-
-        ActivityRepository activityRepository = activityHandler.getRepository();
-        List<Activity> activities = activityRepository.findAllByTaskIdOrderByUpdatedDesc(1L);
-        activities.stream().map(Activity::getStatusCode).forEach(System.out::println);
-        Period period;
-    }
 
 
     public TaskToFull get(long id) {
