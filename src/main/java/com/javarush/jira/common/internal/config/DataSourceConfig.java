@@ -1,6 +1,7 @@
 package com.javarush.jira.common.internal.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -17,8 +18,15 @@ import static org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.
 
 public class DataSourceConfig {
 
+    @Value("${spring.datasource.test_db_name}")
+    private String TEST_DB_NAME;
 
-    private final Environment env;
+    @Value("${spring.datasource.url}")
+    private String DB_URL;
+    @Value("${spring.datasource.username}")
+    private String DB_USERNAME;
+    @Value("${spring.datasource.password}")
+    private String DB_PASSWORD;
 
     @Bean
     @Profile("test")
@@ -26,18 +34,17 @@ public class DataSourceConfig {
         return new EmbeddedDatabaseBuilder()
                 .setType(H2)
                 .setScriptEncoding("UTF-8")
-                .setName(env.getProperty("spring.datasource.test_db_name") + ";NON_KEYWORDS=VALUE")
-//                .ignoreFailedDrops(true)
+                .setName(TEST_DB_NAME + ";NON_KEYWORDS=VALUE")
                 .build();
     }
 
-    @Bean // добавлен, чтобы выполнить условие "создайте два бина". Этот бин можно выкинуть
+    @Bean
     @Profile("prod")
     public DataSource prodDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl(env.getProperty("spring.datasource.url"));
-        dataSource.setUsername(env.getProperty("spring.datasource.username"));
-        dataSource.setPassword(env.getProperty("spring.datasource.password"));
+        dataSource.setUrl(DB_URL);
+        dataSource.setUsername(DB_USERNAME);
+        dataSource.setPassword(DB_PASSWORD);
         return dataSource;
     }
 }

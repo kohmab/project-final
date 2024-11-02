@@ -1,35 +1,35 @@
 --liquibase formatted sql
 
 --changeset kmpk:init_schema
-DROP TABLE IF EXISTS USER_ROLE;
-DROP TABLE IF EXISTS CONTACT;
-DROP TABLE IF EXISTS MAIL_CASE;
+drop table if exists USER_ROLE;
+drop table if exists CONTACT;
+drop table if exists MAIL_CASE;
 DROP
     SEQUENCE IF EXISTS MAIL_CASE_ID_SEQ;
-DROP TABLE IF EXISTS PROFILE;
-DROP TABLE IF EXISTS TASK_TAG;
-DROP TABLE IF EXISTS USER_BELONG;
+drop table if exists PROFILE;
+drop table if exists TASK_TAG;
+drop table if exists USER_BELONG;
 DROP
     SEQUENCE IF EXISTS USER_BELONG_ID_SEQ;
-DROP TABLE IF EXISTS ACTIVITY;
+drop table if exists ACTIVITY;
 DROP
     SEQUENCE IF EXISTS ACTIVITY_ID_SEQ;
-DROP TABLE IF EXISTS TASK;
+drop table if exists TASK;
 DROP
     SEQUENCE IF EXISTS TASK_ID_SEQ;
-DROP TABLE IF EXISTS SPRINT;
+drop table if exists SPRINT;
 DROP
     SEQUENCE IF EXISTS SPRINT_ID_SEQ;
-DROP TABLE IF EXISTS PROJECT;
+drop table if exists PROJECT;
 DROP
     SEQUENCE IF EXISTS PROJECT_ID_SEQ;
-DROP TABLE IF EXISTS REFERENCE;
+drop table if exists REFERENCE;
 DROP
     SEQUENCE IF EXISTS REFERENCE_ID_SEQ;
-DROP TABLE IF EXISTS ATTACHMENT;
+drop table if exists ATTACHMENT;
 DROP
     SEQUENCE IF EXISTS ATTACHMENT_ID_SEQ;
-DROP TABLE IF EXISTS USERS;
+drop table if exists USERS;
 DROP
     SEQUENCE IF EXISTS USERS_ID_SEQ;
 
@@ -248,21 +248,21 @@ values ('assigned', 'Assigned', 6, '1'),
 
 --changeset gkislin:change_backtracking_tables
 
-alter table SPRINT rename COLUMN TITLE to CODE;
+alter table SPRINT rename column TITLE to CODE;
 alter table SPRINT
     alter column CODE type varchar (32);
 alter table SPRINT
     alter column CODE set not null;
 create unique index UK_SPRINT_PROJECT_CODE on SPRINT (PROJECT_ID, CODE);
 
-ALTER TABLE TASK
-    DROP COLUMN DESCRIPTION;
-ALTER TABLE TASK
-    DROP COLUMN PRIORITY_CODE;
-ALTER TABLE TASK
-    DROP COLUMN ESTIMATE;
-ALTER TABLE TASK
-    DROP COLUMN UPDATED;
+alter table TASK
+    drop column DESCRIPTION;
+alter table TASK
+    drop column PRIORITY_CODE;
+alter table TASK
+    drop column ESTIMATE;
+alter table TASK
+    drop column UPDATED;
 
 --changeset ishlyakhtenkov:change_task_status_reference
 
@@ -282,15 +282,18 @@ values ('todo', 'ToDo', 3, 'in_progress,canceled'),
 --changeset gkislin:users_add_on_delete_cascade
 
 alter table ACTIVITY
-    drop constraint FK_ACTIVITY_USERS,
+    drop constraint FK_ACTIVITY_USERS;
+alter table ACTIVITY
     add constraint FK_ACTIVITY_USERS foreign key (AUTHOR_ID) references USERS (ID) on delete cascade;
 
 alter table USER_BELONG
-    drop constraint FK_USER_BELONG,
+    drop constraint FK_USER_BELONG;
+alter table USER_BELONG
     add constraint FK_USER_BELONG foreign key (USER_ID) references USERS (ID) on delete cascade;
 
 alter table ATTACHMENT
-    drop constraint FK_ATTACHMENT,
+    drop constraint FK_ATTACHMENT;
+alter table ATTACHMENT
     add constraint FK_ATTACHMENT foreign key (USER_ID) references USERS (ID) on delete cascade;
 
 --changeset valeriyemelyanov:change_user_type_reference
@@ -328,4 +331,4 @@ values ('todo', 'ToDo', 3, 'in_progress,canceled|'),
 --changeset ishlyakhtenkov:change_UK_USER_BELONG
 
 drop index UK_USER_BELONG;
-create unique index UK_USER_BELONG on USER_BELONG (OBJECT_ID, OBJECT_TYPE, USER_ID, USER_TYPE_CODE) where ENDPOINT is null;
+-- create unique index UK_USER_BELONG on USER_BELONG (OBJECT_ID, OBJECT_TYPE, USER_ID, USER_TYPE_CODE) where ENDPOINT is null;

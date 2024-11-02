@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
 import java.util.Set;
 
@@ -95,6 +97,16 @@ public class TaskService {
             activityHandler.create(makeActivity(id, taskTo));
         }
     }
+
+    @Transactional(readOnly = true)
+    public void test(){
+
+        ActivityRepository activityRepository = activityHandler.getRepository();
+        List<Activity> activities = activityRepository.findAllByTaskIdOrderByUpdatedDesc(1L);
+        activities.stream().map(Activity::getStatusCode).forEach(System.out::println);
+        Period period;
+    }
+
 
     public TaskToFull get(long id) {
         Task task = Util.checkExist(id, handler.getRepository().findFullById(id));
