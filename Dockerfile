@@ -8,4 +8,4 @@ COPY target/jira-1.0.jar /jira.jar
 ENTRYPOINT ["java", "-jar",  "jira.jar"]
 # По-видимому более правильно так:
 #ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "jira.jar"]
-# но на случай высыпания ошибок оставил первую строчку, чтоб проще было разбираться.
+# но чтобы проще было читать логи из докера оставил первый вариант.
