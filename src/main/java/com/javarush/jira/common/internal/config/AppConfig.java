@@ -37,15 +37,6 @@ public class AppConfig {
     private final AppProperties appProperties;
     private final Environment env;
 
-    @Bean
-    public Validator validator() {
-        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
-                .configure()
-                .failFast(true)
-                .buildValidatorFactory();
-        return validatorFactory.getValidator();
-    }
-
     @Bean("mailExecutor")
     Executor getAsyncExecutor() {
         return new ThreadPoolTaskExecutor() {
