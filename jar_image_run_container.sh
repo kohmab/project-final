@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export IMAGE_NAME=jira-pavlichenko
+IMAGE_NAME=jira-pavlichenko
 CONTAINER_NAME=jira-pavlichenko-container
 
 echo "#### EXPORTING REQUIRED ENV VARIABLES ####"
@@ -13,6 +13,7 @@ set +a
 
 echo "### CLEAN ###"
 mvn clean &> /dev/null
+docker stop $CONTAINER_NAME &> /dev/null
 docker rm  $CONTAINER_NAME &> /dev/null
 docker rmi $IMAGE_NAME:latest &> /dev/null
 

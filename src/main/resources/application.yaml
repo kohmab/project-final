@@ -8,9 +8,11 @@ app:
     max-pool-size: 100
 
 spring:
-#  ЧТО БЫ БЫЛО ПРОЩЕ ЗАПУСКАТЬ ИЗ IDE
+#  <ahtung!!!>
+#  КОСТЫЛЬ, ЧТОБЫ БЫЛО ПРОЩЕ ЗАПУСКАТЬ ИЗ IDE И НЕ ПРОПИСЫВАТЬ ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ
   config:
-    import: optional:file:../../../secure.env[.properties]
+    import: optional:file:./secure.env[.properties]
+#  </ahtung!!!>
 
   init:
     mode: never
