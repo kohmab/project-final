@@ -35,7 +35,7 @@ DROP
 
 create table PROJECT
 (
-    ID          bigserial primary key,
+    ID bigserial primary key,
     CODE        varchar(32)   not null
         constraint UK_PROJECT_CODE unique,
     TITLE       varchar(1024) not null,
@@ -49,7 +49,7 @@ create table PROJECT
 
 create table MAIL_CASE
 (
-    ID        bigserial primary key,
+    ID bigserial primary key,
     EMAIL     varchar(255) not null,
     NAME      varchar(255) not null,
     DATE_TIME timestamp    not null,
@@ -59,7 +59,7 @@ create table MAIL_CASE
 
 create table SPRINT
 (
-    ID          bigserial primary key,
+    ID bigserial primary key,
     STATUS_CODE varchar(32)   not null,
     STARTPOINT  timestamp,
     ENDPOINT    timestamp,
@@ -70,7 +70,7 @@ create table SPRINT
 
 create table REFERENCE
 (
-    ID         bigserial primary key,
+    ID bigserial primary key,
     CODE       varchar(32)   not null,
     REF_TYPE   smallint      not null,
     ENDPOINT   timestamp,
@@ -82,7 +82,7 @@ create table REFERENCE
 
 create table USERS
 (
-    ID           bigserial primary key,
+    ID bigserial primary key,
     DISPLAY_NAME varchar(32)  not null
         constraint UK_USERS_DISPLAY_NAME unique,
     EMAIL        varchar(128) not null
@@ -114,7 +114,7 @@ create table CONTACT
 
 create table TASK
 (
-    ID            bigserial primary key,
+    ID bigserial primary key,
     TITLE         varchar(1024) not null,
     DESCRIPTION   varchar(4096) not null,
     TYPE_CODE     varchar(32)   not null,
@@ -134,7 +134,7 @@ create table TASK
 
 create table ACTIVITY
 (
-    ID            bigserial primary key,
+    ID bigserial primary key,
     AUTHOR_ID     bigint not null,
     TASK_ID       bigint not null,
     UPDATED       timestamp,
@@ -160,7 +160,7 @@ create table TASK_TAG
 
 create table USER_BELONG
 (
-    ID             bigserial primary key,
+    ID bigserial primary key,
     OBJECT_ID      bigint      not null,
     OBJECT_TYPE    smallint    not null,
     USER_ID        bigint      not null,
@@ -174,7 +174,7 @@ create index IX_USER_BELONG_USER_ID on USER_BELONG (USER_ID);
 
 create table ATTACHMENT
 (
-    ID          bigserial primary key,
+    ID bigserial primary key,
     NAME        varchar(128)  not null,
     FILE_LINK   varchar(2048) not null,
     OBJECT_ID   bigint        not null,
@@ -248,22 +248,21 @@ values ('assigned', 'Assigned', 6, '1'),
 
 --changeset gkislin:change_backtracking_tables
 
+alter table SPRINT rename column TITLE to CODE;
 alter table SPRINT
-    rename column TITLE to CODE;
-alter table SPRINT
-alter column CODE type varchar(32);
+    alter column CODE type varchar (32);
 alter table SPRINT
     alter column CODE set not null;
 create unique index UK_SPRINT_PROJECT_CODE on SPRINT (PROJECT_ID, CODE);
 
 alter table TASK
-drop column DESCRIPTION;
+    drop column DESCRIPTION;
 alter table TASK
-drop column PRIORITY_CODE;
+    drop column PRIORITY_CODE;
 alter table TASK
-drop column ESTIMATE;
+    drop column ESTIMATE;
 alter table TASK
-drop column UPDATED;
+    drop column UPDATED;
 
 --changeset ishlyakhtenkov:change_task_status_reference
 
@@ -283,17 +282,17 @@ values ('todo', 'ToDo', 3, 'in_progress,canceled'),
 --changeset gkislin:users_add_on_delete_cascade
 
 alter table ACTIVITY
-drop constraint FK_ACTIVITY_USERS;
+    drop constraint FK_ACTIVITY_USERS;
 alter table ACTIVITY
     add constraint FK_ACTIVITY_USERS foreign key (AUTHOR_ID) references USERS (ID) on delete cascade;
 
 alter table USER_BELONG
-drop constraint FK_USER_BELONG;
+    drop constraint FK_USER_BELONG;
 alter table USER_BELONG
     add constraint FK_USER_BELONG foreign key (USER_ID) references USERS (ID) on delete cascade;
 
 alter table ATTACHMENT
-drop constraint FK_ATTACHMENT;
+    drop constraint FK_ATTACHMENT;
 alter table ATTACHMENT
     add constraint FK_ATTACHMENT foreign key (USER_ID) references USERS (ID) on delete cascade;
 
@@ -332,21 +331,4 @@ values ('todo', 'ToDo', 3, 'in_progress,canceled|'),
 --changeset ishlyakhtenkov:change_UK_USER_BELONG
 
 drop index UK_USER_BELONG;
--- TODO create unique index UK_USER_BELONG on USER_BELONG (OBJECT_ID, OBJECT_TYPE, USER_ID, USER_TYPE_CODE) where ENDPOINT is null;
-
-
---
--- INSERT INTO ACTIVITY(AUTHOR_ID, TASK_ID, UPDATED, COMMENT, TITLE, DESCRIPTION, ESTIMATE, TYPE_CODE, STATUS_CODE,
---                      PRIORITY_CODE)
--- values (6, 1, '2023-05-15 09:05:10', null, 'Data', null, 3, 'epic', 'in_progress', 'low'),
---        (5, 1, '2023-05-15 12:25:10', null, 'Data', null, null, null, 'ready_for_review', 'normal'),
---        (6, 1, '2023-05-15 14:05:10', null, 'Data', null, 4, null, null, null),
--- --        (6, 1, '2024-05-15 09:05:10', null, 'Data', null, 3, 'epic', null, 'low'),
--- --        (5, 1, '2024-05-15 12:25:10', null, 'Data', null, null, null, null, 'normal'),
--- --        (6, 1, '2024-05-15 14:05:10', null, 'Data', null, 4, null, 'done', null),
---        (11, 118, '2023-05-16 10:05:10', null, 'UI tab of tasks', null, 4, 'task', 'in_progress', 'normal'),
---        (5, 118, '2023-05-16 11:10:10', null, 'UI tab of tasks', null, null, null, null, 'high'),
---        (11, 118, '2023-05-16 12:30:10', null, 'UI tab of tasks', null, 2, null, 'ready_for_review', null);
--- --        (11, 118, '2023-06-16 10:05:10', null, 'UI tab of tasks', null, 4, 'task', 'in_progress', 'normal'),
--- --        (5, 118, '2023-06-16 11:10:10', null, 'UI tab of tasks', null, null, null, null, 'high'),
--- --        (11, 118, '2023-06-16 12:30:10', null, 'UI tab of tasks', null, 2, null, 'done', null);
+-- create unique index UK_USER_BELONG on USER_BELONG (OBJECT_ID, OBJECT_TYPE, USER_ID, USER_TYPE_CODE) where ENDPOINT is null;
