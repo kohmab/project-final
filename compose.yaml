@@ -19,6 +19,9 @@ services:
     image: postgres:latest
     volumes:
       - ./dbdata:/var/lib/postgresql/data
+    env_file:
+      - path: ./secure.env
+        required: true
     environment:
       - POSTGRES_USER=${DATASOURCE_USERNAME}
       - POSTGRES_PASSWORD=${DATASOURCE_PASSWORD}

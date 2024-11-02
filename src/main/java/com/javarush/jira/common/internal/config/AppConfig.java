@@ -23,6 +23,7 @@ import javax.sql.DataSource;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
+
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
@@ -35,6 +36,15 @@ public class AppConfig {
 
     private final AppProperties appProperties;
     private final Environment env;
+
+    @Bean
+    public Validator validator() {
+        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+                .configure()
+                .failFast(true)
+                .buildValidatorFactory();
+        return validatorFactory.getValidator();
+    }
 
     @Bean("mailExecutor")
     Executor getAsyncExecutor() {
